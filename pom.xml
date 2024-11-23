@@ -13,21 +13,31 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>hackaton</name>
 	<description>Hackaton project using Spring Boot</description>
-	<url/>
-	<licenses>
-		<license/>
-	</licenses>
-	<developers>
-		<developer/>
-	</developers>
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
+	<repositories>
+		<repository>
+			<id>central-sonatype</id>
+			<name>Central Sonatype</name>
+			<url>https://repo1.maven.apache.org/maven2</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>central</id>
+			<url>https://repo1.maven.org/maven2</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</pluginRepository>
+	</pluginRepositories>
 	<properties>
 		<java.version>17</java.version>
+		<project.version>1.0.0</project.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<sonar.organization>diegobbrito</sonar.organization>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+		<sonar.coverage.jacoco.xmlReportPaths>
+			target/jacoco-reports/jacoco.xml
+		</sonar.coverage.jacoco.xmlReportPaths>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -90,5 +100,44 @@
 			</plugin>
 		</plugins>
 	</build>
-
+	<profiles>
+		<profile>
+			<id>coverage</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+					</plugin>
+					<plugin>
+						<groupId>org.jacoco</groupId>
+						<artifactId>jacoco-maven-plugin</artifactId>
+						<version>0.8.10</version>
+						<executions>
+							<execution>
+								<id>prepare-agent</id>
+								<goals>
+									<goal>prepare-agent</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>report</id>
+								<goals>
+									<goal>report</goal>
+								</goals>
+								<configuration>
+									<formats>
+										<format>XML</format>
+									</formats>
+								</configuration>
+							</execution>
+						</executions>
+						<configuration>
+							<outputDirectory>${project.build.directory}/jacoco-reports</outputDirectory>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
