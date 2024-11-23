@@ -1,4 +1,3 @@
-version: '3.1'
 services:
   stockdb:
     image: "mysql:8.0"
