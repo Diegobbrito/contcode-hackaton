@@ -1,0 +1,37 @@
+version: '3.1'
+services:
+  stockdb:
+    image: "mysql:8.0"
+    restart: always
+    environment:
+      MYSQL_DATABASE: '${DB_DATABASE}'
+      MYSQL_USER: '${DB_USER}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD_ROOT}'
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d
+      - stock-data:/db
+    networks:
+      - stock-network
+  stockapp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    environment:
+      - spring.datasource.url=jdbc:mysql://hackaton:${DB_PORT}/${DB_DATABASE}?allowPublicKeyRetrieval=true&autoReconnect=true&failOverReadOnly=false&maxReconnects=10
+      - spring.datasource.username=${DB_USER}
+      - spring.datasource.password=${DB_PASSWORD}
+    depends_on:
+      - stockdb
+    links:
+      - stockdb
+    networks:
+      - stock-network
+networks:
+  stock-network:
+volumes:
+  stock-data:
