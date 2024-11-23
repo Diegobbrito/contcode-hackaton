@@ -1,4 +1,4 @@
-package com.contcode.hackaton.controller;
+package com.contcode.hackaton.service;
 
 @Service
 public class StockService {
