@@ -10,6 +10,11 @@ CREATE TABLE stock (
     PRIMARY KEY (id)
 );
 
+SET character_set_client = utf8;
+SET character_set_connection = utf8;
+SET character_set_results = utf8;
+SET collation_connection = utf8_general_ci;
+
 INSERT INTO stock (code, company_name, company_document, type)
 VALUES
     -- Ações (50)
@@ -79,3 +84,7 @@ VALUES
     ('AAPL34', 'Apple Inc.', '94.302.210/0001-00', '32'),
     ('MSFT34', 'Microsoft Corporation', '30.687.343/0001-00', '32'),
     ('TSLA34', 'Tesla Inc.', '02.345.435/0001-00', '32');
+
+
+GRANT ALL PRIVILEGES ON *.* TO 'usuario'@'%' WITH GRANT OPTION;
+flush privileges;
