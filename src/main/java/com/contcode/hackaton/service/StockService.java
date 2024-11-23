@@ -1,6 +1,8 @@
 package com.contcode.hackaton.service;
 
 import com.contcode.hackaton.adapter.StockAdapter;
+import com.contcode.hackaton.domain.Stock;
+import com.contcode.hackaton.dto.StockCreateRequest;
 import com.contcode.hackaton.dto.StockDTO;
 import com.contcode.hackaton.dto.StockRequest;
 import com.contcode.hackaton.dto.StockResponse;
@@ -22,5 +24,14 @@ public class StockService {
         List<String> stocksCode = stockRequest.getStocks().stream().map(StockDTO::getCode).toList();
         var result = stockRepository.findAllByCode(stocksCode);
         return StockAdapter.toResponse(result, stockRequest.getStocks());
+    }
+
+    public void add(StockCreateRequest request) {
+        Stock stock = new Stock(
+                request.code(),
+                request.companyName(),
+                request.companyDocument(),
+                request.type());
+        stockRepository.add(stock);
     }
 }

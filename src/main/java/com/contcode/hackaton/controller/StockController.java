@@ -1,8 +1,10 @@
 package com.contcode.hackaton.controller;
 
+import com.contcode.hackaton.dto.StockCreateRequest;
 import com.contcode.hackaton.dto.StockRequest;
 import com.contcode.hackaton.dto.StockResponse;
 import com.contcode.hackaton.service.StockService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +24,12 @@ public class StockController {
     @PostMapping
     public ResponseEntity<StockResponse> stock(@RequestBody StockRequest stockRequest) {
         return ResponseEntity.ok(stockService.stock(stockRequest));
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<StockResponse> add(@RequestBody StockCreateRequest stockRequest) {
+        stockService.add(stockRequest);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 }

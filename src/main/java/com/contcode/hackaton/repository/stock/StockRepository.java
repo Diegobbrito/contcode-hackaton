@@ -21,4 +21,14 @@ public class StockRepository implements IStockRepository {
         var stocks = repository.findAllByCode(code);
         return StockAdapter.toStocks(stocks);
     }
+
+    @Override
+    public void add(Stock stock) {
+        var optional = repository.findByCode(stock.getCode());
+        if(optional.isPresent()){
+            return;
+        }
+        var stockEntity = new StockEntity(stock);
+        repository.save(stockEntity);
+    }
 }
