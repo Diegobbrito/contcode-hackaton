@@ -67,3 +67,35 @@ jobs:
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/contcode-hackaton:latest
             ${{ secrets.DOCKER_USERNAME }}/contcode-hackaton:v${{ github.run_number }}
+
+deploy-ocp:
+  runs-on: ubuntu-latest
+  needs: push-docker-image
+  steps:
+    - uses: actions/checkout@v3
+    - name: Login to OpenShift
+      env:
+        KUBECONFIG: ${{ secrets.KUBECONFIG }}
+      run: |
+        oc login --token=${{ secrets.OCP_TOKEN }} --server=${{ secrets.OCP_SERVER }}
+
+    # List files (debugging step, can be removed)
+    - name: List files in directory
+      run: ls -R
+
+    # Apply Kubernetes manifest for the deployment
+    - name: Deploy to OpenShift
+      env:
+        KUBECONFIG: ${{ secrets.KUBECONFIG }}
+      run: |
+        # Set the image to the latest built version (based on the Docker tags)
+        oc set image deployment/stoke stoke=${{ secrets.DOCKER_USERNAME }}/contcode-hackaton:v${{ github.run_number }}
+        
+        # Optionally, you can wait for the rollout to complete
+        oc rollout status deployment/stoke
+
+        # If you're using a Kubernetes `deployment.yaml` file, you can apply the changes like so:
+        # oc apply -f ./kubernetes/app/deployment.yaml
+        
+        # You can also trigger the deployment manually if required
+        # oc rollout restart deployment/stoke
