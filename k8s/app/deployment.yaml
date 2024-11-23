@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stock
+  labels:
+    app: stock
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stock
+  template:
+    metadata:
+      labels:
+        app: stock
+    spec:
+      containers:
+        - name: stock
+          image: diegobbrito17/contcode-hackaton:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            - name: DB_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: secret-stock
+                  key: db_database
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: secret-stock
+                  key: db_user
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-stock
+                  key: db_password
+            - name: DB_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: secret-stock
+                  key: db_port
+            - name: DB_SERVER
+              valueFrom:
+                secretKeyRef:
+                  name: secret-stock
+                  key: db_server
