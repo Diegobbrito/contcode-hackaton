@@ -28,22 +28,22 @@ spec:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: secret
+                  name: secret-stock
                   key: db_root_password
             - name: MYSQL_DATABASE
               valueFrom:
                 secretKeyRef:
-                  name: secret
+                  name: secret-stock
                   key: db_database
             - name: MYSQL_USER
               valueFrom:
                 secretKeyRef:
-                  name: secret
+                  name: secret-stock
                   key: db_user
             - name: MYSQL_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: secret
+                  name: secret-stock
                   key: db_password
           volumeMounts:
             - name: db-persistent-storage
