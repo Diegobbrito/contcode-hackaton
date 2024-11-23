@@ -21,6 +21,6 @@ public class StockService {
     public StockResponse stock(StockRequest stockRequest) {
         List<String> stocksCode = stockRequest.getStocks().stream().map(StockDTO::getCode).toList();
         var result = stockRepository.findAllByCode(stocksCode);
-        return StockAdapter.toResponse(result);
+        return StockAdapter.toResponse(result, stockRequest.getStocks());
     }
 }
