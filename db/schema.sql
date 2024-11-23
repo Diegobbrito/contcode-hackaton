@@ -2,22 +2,14 @@ CREATE DATABASE IF NOT EXISTS hackaton;
 USE hackaton;
 
 CREATE TABLE stock (
-    id INT NOT NULL AUTO_INCREMENT,
+    id SERIAL PRIMARY KEY,
     code VARCHAR(200) NOT NULL,
     company_name VARCHAR(200) NOT NULL,
     company_document VARCHAR(200) NOT NULL,
-    type VARCHAR(200) NOT NULL,
-    PRIMARY KEY (id)
+    type VARCHAR(200) NOT NULL
 );
-
-SET character_set_client = utf8;
-SET character_set_connection = utf8;
-SET character_set_results = utf8;
-SET collation_connection = utf8_general_ci;
-
 INSERT INTO stock (code, company_name, company_document, type)
 VALUES
-    -- Ações (50)
     ('SANB11', 'Banco Santander Brasil S.A.', '90.400.888/0001-42', '31'),
     ('ITUB4', 'Itaú Unibanco Holding S.A.', '60.677.781/0001-12', '31'),
     ('BBDC3', 'Bradesco S.A.', '60.746.948/0001-12', '31'),
@@ -65,8 +57,6 @@ VALUES
     ('ITSA4', 'Itaúsa S.A.', '60.677.781/0001-12', '31'),
     ('IRBR3', 'IRB Brasil RE', '00.000.000/0001-23', '31'),
     ('HAPV3', 'Hapvida S.A.', '11.413.515/0001-90', '31'),
-
-    -- Fundos Imobiliários (10) - Dados reais
     ('HGRU11', 'Fundo de Investimento Imobiliário - HGRU', '30.040.459/0001-73', '31'),
     ('KNRI11', 'Fundo de Investimento Imobiliário - KNRI', '02.257.261/0001-69', '31'),
     ('MXRF11', 'Fundo de Investimento Imobiliário - MXRF', '29.952.744/0001-92', '31'),
@@ -77,14 +67,8 @@ VALUES
     ('TRXF11', 'Fundo de Investimento Imobiliário - TRXF', '00.000.000/0001-00', '31'),
     ('BBPO11', 'Fundo de Investimento Imobiliário - BBPO', '00.000.000/0001-00', '31'),
     ('XPLG11', 'Fundo de Investimento Imobiliário - XPLG', '00.000.000/0001-00', '31'),
-
-    -- BDRs (corrigido código de imposto como 32)
     ('GOGL34', 'Golden Ocean Group Ltd', '13.889.298/0001-52', '32'),
     ('NFLX34', 'Netflix Inc.', '78.389.710/0001-00', '32'),
     ('AAPL34', 'Apple Inc.', '94.302.210/0001-00', '32'),
     ('MSFT34', 'Microsoft Corporation', '30.687.343/0001-00', '32'),
     ('TSLA34', 'Tesla Inc.', '02.345.435/0001-00', '32');
-
-
-GRANT ALL PRIVILEGES ON *.* TO 'usuario'@'%' WITH GRANT OPTION;
-flush privileges;
