@@ -5,8 +5,6 @@ import com.contcode.hackaton.dto.StockDTO;
 import com.contcode.hackaton.dto.StockResponse;
 import com.contcode.hackaton.dto.StockResponseDTO;
 import com.contcode.hackaton.repository.stock.StockEntity;
-import lombok.AllArgsConstructor;
-
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -14,8 +12,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
-@AllArgsConstructor
 public class StockAdapter {
+
+    private StockAdapter() {
+    }
 
     private static final String TEMPLATE = "%d ações da empresa %s, %s com CNPJ %s, com valor total de %s";
 
