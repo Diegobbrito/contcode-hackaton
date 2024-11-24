@@ -62,7 +62,7 @@
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>42.5.0</version> <!-- Use the latest version -->
+			<version>42.7.2</version> <!-- Use the latest version -->
 		</dependency>
 
 		<!-- database -->
@@ -127,7 +127,7 @@
 					<plugin>
 						<groupId>org.jacoco</groupId>
 						<artifactId>jacoco-maven-plugin</artifactId>
-						<version>0.8.10</version>
+						<version>0.8.7</version>
 						<executions>
 							<execution>
 								<id>prepare-agent</id>
