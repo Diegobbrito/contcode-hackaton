@@ -1,5 +1,6 @@
 package com.contcode.hackaton.repository.stock;
 
+import com.contcode.hackaton.domain.Stock;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,4 +19,10 @@ public class StockEntity {
     private String companyDocument;
     private String type;
 
+    public StockEntity(Stock stock) {
+        this.code = stock.getCode();
+        this.companyName = stock.getCompanyName();
+        this.companyDocument = stock.getCompanyDocument();
+        this.type = stock.getType();
+    }
 }
