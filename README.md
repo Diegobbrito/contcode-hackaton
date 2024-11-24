@@ -35,6 +35,11 @@ Arquivos para aplicação:
 
 **Back-end:** [Java](https://www.oracle.com/br/java/), [Springboot](https://spring.io/projects/spring-boot)
 
+**Docker**
+
+**Github Actions**
+
+**Deploy:** [OpenShift](https://www.redhat.com/pt-br/technologies/cloud-computing/openshift/container-platform)
 
 ## Autores
 
