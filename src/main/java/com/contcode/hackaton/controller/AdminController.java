@@ -2,6 +2,8 @@ package com.contcode.hackaton.controller;
 
 import com.contcode.hackaton.dto.UserDTO;
 import com.contcode.hackaton.repository.IUserRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,10 +23,10 @@ public class AdminController {
     }
 
     @PostMapping("/create")
-    public String createAdmin(@RequestBody UserDTO user) {
+    public ResponseEntity<Void> createAdmin(@RequestBody UserDTO user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.getRoles().add("ADMIN");
         userRepository.save(user);
-        return "Admin created successfully!";
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }
