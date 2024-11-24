@@ -77,7 +77,7 @@ class StockAdapterTest {
             method.setAccessible(true);
             String totalValue = (String) method.invoke(null, 10, new BigDecimal("150.00"));
 
-            assertEquals("R$1.500,00", totalValue);
+            assertEquals("R$ 1.500,00", totalValue);
         } catch (Exception e) {
             fail("Reflection failed: " + e.getMessage());
         }
