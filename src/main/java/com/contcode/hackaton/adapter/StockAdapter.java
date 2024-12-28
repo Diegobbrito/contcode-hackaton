@@ -25,8 +25,7 @@ public class StockAdapter {
 
     private static String calculateTotalValue(int quantity, BigDecimal value) {
         BigDecimal totalValue = value.multiply(new BigDecimal(quantity));
-        return "R$ " + new DecimalFormat(
-                "#,###,##0.00",
+        return new DecimalFormat("R$ #,###,##0.00",
                 new DecimalFormatSymbols(new Locale("pt", "BR")))
                 .format(totalValue);
     }
