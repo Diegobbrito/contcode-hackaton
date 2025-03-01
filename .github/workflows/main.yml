@@ -53,6 +53,9 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
+      - name: Compile project
+        run: mvn -B clean compile
+
       - name: SonarCloud Scan
         uses: sonarsource/sonarqube-scan-action@v4.1.0
         env:
@@ -65,16 +68,16 @@ jobs:
             -Dsonar.host.url=https://sonarcloud.io
             -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
             -Dsonar.exclusions=**/config/**,**/*Application.java
-            -Dsonar.java.binaries=./target/classes
+            -Dsonar.java.binaries=target/classes
+            -Dsonar.scanner.metadataFilePath=.scannerwork/report-task.txt
           projectBaseDir: ./src
-          scanMetadataReportFile: ./src/.scannerwork/report-task.txt
 
       - name: SonarCloud Quality Gate check
         id: sonarqube-quality-gate-check
         uses: sonarsource/sonarqube-quality-gate-action@master
         with:
           pollingTimeoutSec: 600
-          scanMetadataReportFile: ./src/.scannerwork/report-task.txt
+          scanMetadataReportFile: .scannerwork/report-task.txt
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
