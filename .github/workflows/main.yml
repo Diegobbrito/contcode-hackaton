@@ -60,9 +60,10 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
-            -Dsonar.projectKey=Diegobbrito_contcode-hackaton \
-            -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml \
+            -Dsonar.projectKey=Diegobbrito_contcode-hackaton
+            -Dsonar.organization=diegobbrito
+            -Dsonar.host.url=https://sonarcloud.io
+            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
             -Dsonar.exclusions=**/config/**,**/*Application.java
           projectBaseDir: ./src
           scanMetadataReportFile: ./src/.scannerwork/report-task.txt
