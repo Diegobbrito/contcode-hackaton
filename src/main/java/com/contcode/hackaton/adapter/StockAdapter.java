@@ -25,22 +25,21 @@ public class StockAdapter {
 
     private static String calculateTotalValue(int quantity, BigDecimal value) {
         BigDecimal totalValue = value.multiply(new BigDecimal(quantity));
-        return "R$ " + new DecimalFormat(
-                "#,###,##0.00",
+        return new DecimalFormat("R$ #,###,##0.00",
                 new DecimalFormatSymbols(new Locale("pt", "BR")))
                 .format(totalValue);
     }
 
     public static StockResponse toResponse(List<Stock> stocks, List<StockDTO> stockRequest) {
 
-        var stockResponse = stocks.stream().map(s -> {
-            Optional<StockDTO> optional = stockRequest.stream().filter(stockDTO -> stockDTO.getCode().equals(s.getCode())).findFirst();
+        var stockResponse = stocks.stream().map(stock -> {
+            Optional<StockDTO> optional = stockRequest.stream().filter(stockDTO -> stockDTO.getCode().equals(stock.getCode())).findFirst();
             if (optional.isPresent()) {
                 StockResponseDTO response = new StockResponseDTO();
-                response.setCode(s.getCode());
-                response.setCompanyDocument(s.getCompanyDocument());
+                response.setCode(stock.getCode());
+                response.setCompanyDocument(stock.getCompanyDocument());
                 String value = calculateTotalValue(optional.get().getQuantity(), optional.get().getValue());
-                response.setDescription(String.format(TEMPLATE, optional.get().getQuantity(), s.getCompanyName(), s.getCode(), s.getCompanyDocument(), value));
+                response.setDescription(String.format(TEMPLATE, optional.get().getQuantity(), stock.getCompanyName(), stock.getCode(), stock.getCompanyDocument(), value));
                 return response;
             }
             return null;
