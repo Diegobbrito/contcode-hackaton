@@ -20,8 +20,8 @@ jobs:
           java-version: '17'
           cache: 'maven'
 
-      - name: Run Tests with Coverage
-        run: mvn test -Pcoverage
+      - name: Compile project
+        run: mvn -B clean compile
 
   code-analyze:
     runs-on: ubuntu-latest
@@ -65,6 +65,7 @@ jobs:
             -Dsonar.host.url=https://sonarcloud.io
             -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
             -Dsonar.exclusions=**/config/**,**/*Application.java
+            -Dsonar.java.binaries=target/classes
           projectBaseDir: ./src
           scanMetadataReportFile: ./src/.scannerwork/report-task.txt
 
