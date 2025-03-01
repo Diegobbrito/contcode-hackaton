@@ -53,29 +53,48 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
-      - name: Build and analyze with SonarCloud
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarqube-scan-action@v4.1.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-          -Dsonar.projectKey=Diegobbrito_contcode-hackaton \
-          -Dsonar.organization=diegobbrito \
-          -Dsonar.host.url=https://sonarcloud.io \
-          -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml \
-          -Dsonar.exclusions=**/config/**,**/*Application.java \
-          -Dsonar.projectBaseDir=.
+        with:
+          args: >
+            -Dsonar.projectKey=Diegobbrito_contcode-hackaton \
+            -Dsonar.organization=diegobbrito \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml \
+            -Dsonar.exclusions=**/config/**,**/*Application.java
+          projectBaseDir: ./src
+          scanMetadataReportFile: ./src/.scannerwork/report-task.txt
 
-      - name: Debug SonarQube Scanner output
-        run: |
-          echo "Listing .scannerwork directory contents:" 
-          ls -la .scannerwork/ || echo "No .scannerwork directory found"
+#      - name: Build and analyze with SonarCloud
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#        run: |
+#          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+#          -Dsonar.projectKey=Diegobbrito_contcode-hackaton \
+#          -Dsonar.organization=diegobbrito \
+#          -Dsonar.host.url=https://sonarcloud.io \
+#          -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml \
+#          -Dsonar.exclusions=**/config/**,**/*Application.java \
+#          -Dsonar.projectBaseDir=.
+#
+#      - name: Wait for SonarCloud Processing
+#        run: sleep 30
+#
+#      - name: Debug SonarQube Scanner output
+#        run: |
+#          echo "Listing .scannerwork directory contents:"
+#          ls -R .scannerwork/ || echo "No .scannerwork directory found"
 
       - name: SonarCloud Quality Gate check
         id: sonarqube-quality-gate-check
         uses: sonarsource/sonarqube-quality-gate-action@master
         with:
           pollingTimeoutSec: 600
+          scanMetadataReportFile: ./src/.scannerwork/report-task.txt
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
